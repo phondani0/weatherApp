@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weather App</title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar bg-dark navbar-dark">
+            <div class="navbar-brand">Weather App</div>
+        </nav>
+    </header>
+    <section>
+        <div class="container py-4">
+            <form>
+                <div class="form-group">
+                    <input class="form-control" id="locationName" type="text" name="locationName"
+                        placeholder="Enter a location">
+                </div>
+                <input class="form-control btn btn-secondary" id="submit-btn" type="submit" vlaue="Submit">
+            </form>
+        </div>
+    </section>
+
+    <section>
+        <div id="weather-data" class="container">
+
+        </div>
+    </section>
+
+    <footer id="footer" class="bg-dark text-white fixed-bottom">
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <div>Weather App &copy; 2019</div>
+        </div>
+    </footer>
+
+    <!-- Google Places API -->
+    <script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpOW_nufuoTdFlsDNaYpYeSUAWtWsbewA&libraries=places">
+    </script>
+    <script src="/js/app.js"></script>
+</body>
+
+</html>

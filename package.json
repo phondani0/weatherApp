@@ -1,0 +1,8 @@
+{
+  "name": "weatherapp",
+  "version": "1.0.0",
+  "description": "Javascript weather app",
+  "main": "app.js",
+  "author": "Ankit Phondani",
+  "license": "MIT"
+}
