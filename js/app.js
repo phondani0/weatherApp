@@ -4,12 +4,16 @@
         e.preventDefault();
         const locationName = document.getElementById('locationName').value;
 
+        // show loading gif
+        document.getElementById('weather-data').innerHTML = `<div class="text-center"><img src="/img/loading.gif"></div>`;
+
         // Fetch Places from google Places API
-        getPlacesData(locationName);
+        getPlaces(locationName);
     });
 })();
 
-function getPlacesData(locationName) {
+// Fetch Places from google Places API
+function getPlaces(locationName) {
     var request = {
         query: locationName,
         fields: ['name', 'geometry'],
@@ -19,18 +23,17 @@ function getPlacesData(locationName) {
 
     service.findPlaceFromQuery(request, function (results, status) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-            for (var i = 0; i < results.length; i++) {
-                // console.log(results[i]);
-
-                // Get Weather from weather API
-                getWeatherData(results[i].geometry.location.lat(), results[i].geometry.location.lng());
-
+            try {
+                getWeather(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+            } catch (e) {
+                console.log(e)
             }
         }
     });
 }
 
-function getWeatherData(lat, lng) {
+// Get Weather from weather API
+function getWeather(lat, lng) {
     //  APIXU weather API key
     const key = "43ab36619f55413f97692741190206";
 
@@ -66,6 +69,7 @@ function getWeatherData(lat, lng) {
     xhr.send();
 }
 
+// Render weather data
 function renderWeatherData(data) {
     let content = `
     <div id="result-content">
@@ -75,10 +79,10 @@ function renderWeatherData(data) {
         </div>
         <h3>${data.condition}</h3>
         <h1>${data.temp_c} &deg;C</h1>
-        <p>Feelslike: ${data.feelslike_c}</p>
+        <p>Feelslike: ${data.feelslike_c} &deg;C</p>
         <div class="d-flex justify-content-between">
-            <p>Wind Speed: ${data.windSpeed}</p>
-            <p>Humidity: ${data.humidity}</p>
+            <p>Wind Speed: ${data.windSpeed}Km/h</p>
+            <p>Humidity: ${data.humidity}%</p>
         </div>
     </div>`;
 
