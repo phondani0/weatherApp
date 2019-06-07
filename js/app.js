@@ -14,20 +14,16 @@
 
 // Fetch Places from google Places API
 function getPlaces(locationName) {
-    var request = {
+    const request = {
         query: locationName,
         fields: ['name', 'geometry'],
     };
 
-    var service = new google.maps.places.PlacesService(document.createElement('div'));
+    const service = new google.maps.places.PlacesService(document.createElement('div'));
 
     service.findPlaceFromQuery(request, function (results, status) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-            try {
-                getWeather(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-            } catch (e) {
-                console.log(e)
-            }
+            getWeather(results[0].geometry.location.lat(), results[0].geometry.location.lng());
         }
     });
 }
