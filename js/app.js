@@ -1,35 +1,40 @@
 (() => {
-    document.getElementById('submit-btn').addEventListener('click', (e) => {
+    document.getElementById('form').addEventListener('submit', (e) => {
         // prevent form submission
         e.preventDefault();
-        const locationName = document.getElementById('locationName').value;
-
-        // show loading gif
-        document.getElementById('weather-data').innerHTML = `<div class="text-center"><img src="img/loading.gif"></div>`;
-
-        // Fetch Places from google Places API
-        getPlaces(locationName);
     });
 })();
 
+// Adds a DOM event listener to the window object, for the 'load' event, to run initAutocomplete function
+google.maps.event.addDomListener(window, 'load', initAutocomplete);
+
+function initAutocomplete() {
+    autocomplete = new google.maps.places.Autocomplete(
+        /** @type {!HTMLInputElement} */
+        (document.getElementById('locationName')), {
+            types: ['geocode']
+        });
+    // fields in the form.
+    autocomplete.addListener('place_changed', getPlaceDetails);
+
+}
+
 // Fetch Places from google Places API
-function getPlaces(locationName) {
-    const request = {
-        query: locationName,
-        fields: ['name', 'geometry'],
-    };
+function getPlaceDetails() {
+    // Get the place details from the autocomplete object.
+    const place = autocomplete.getPlace();
+    console.log(place);
+    // get weather from APIXU API
+    getWeather(place.geometry.location.lat(), place.geometry.location.lng());
 
-    const service = new google.maps.places.PlacesService(document.createElement('div'));
-
-    service.findPlaceFromQuery(request, function (results, status) {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-            getWeather(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-        }
-    });
 }
 
 // Get Weather from weather API
 function getWeather(lat, lng) {
+
+    // show loading gif
+    document.getElementById('weather-data').innerHTML = `<div class="text-center"><img src="img/loading.gif"></div>`;
+
     //  APIXU weather API key
     const key = "43ab36619f55413f97692741190206";
 
@@ -42,7 +47,7 @@ function getWeather(lat, lng) {
         if (xhr.readyState === 4 && xhr.status === 200) {
 
             const data = JSON.parse(xhr.responseText);
-            console.log(data);
+            // console.log(data);
             const weatherData = {
                 name: data.location.name,
                 region: data.location.region,
@@ -56,12 +61,10 @@ function getWeather(lat, lng) {
                 feelslike_c: data.current.feelslike_c,
                 feelslike_f: data.current.feelslike_f,
             }
-
             // Render weather data
             renderWeatherData(weatherData);
         }
     }
-
     xhr.send();
 }
 
@@ -83,5 +86,4 @@ function renderWeatherData(data) {
     </div>`;
 
     document.getElementById('weather-data').innerHTML = content;
-
 }
