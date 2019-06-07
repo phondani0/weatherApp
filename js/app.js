@@ -5,7 +5,7 @@
         const locationName = document.getElementById('locationName').value;
 
         // show loading gif
-        document.getElementById('weather-data').innerHTML = `<div class="text-center"><img src="/img/loading.gif"></div>`;
+        document.getElementById('weather-data').innerHTML = `<div class="text-center"><img src="img/loading.gif"></div>`;
 
         // Fetch Places from google Places API
         getPlaces(locationName);
