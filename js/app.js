@@ -9,14 +9,11 @@
 google.maps.event.addDomListener(window, 'load', initAutocomplete);
 
 function initAutocomplete() {
-    autocomplete = new google.maps.places.Autocomplete(
-        /** @type {!HTMLInputElement} */
-        (document.getElementById('locationName')), {
-            types: ['geocode']
-        });
+    autocomplete = new google.maps.places.Autocomplete((document.getElementById('locationName')), {
+        types: ['geocode']
+    });
     // fields in the form.
     autocomplete.addListener('place_changed', getPlaceDetails);
-
 }
 
 // Fetch Places from google Places API
